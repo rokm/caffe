@@ -372,6 +372,7 @@ message LayerParameter {
   optional PythonParameter python_param = 130;
   optional ReductionParameter reduction_param = 136;
   optional ReLUParameter relu_param = 123;
+  optional ROIPoolingParameter roi_pooling_param = 8266711;
   optional ReshapeParameter reshape_param = 133;
   optional SigmoidParameter sigmoid_param = 124;
   optional SoftmaxParameter softmax_param = 125;
@@ -784,6 +785,14 @@ message ReLUParameter {
   optional Engine engine = 2 [default = DEFAULT];
 }
 
+// Message that stores parameters used by ROIPoolingLayer
+message ROIPoolingParameter {
+  // Pad, kernel size, and stride are all given as a single value for equal
+  // dimensions in height and width or as Y, X pairs.
+  optional uint32 pooled_h = 1 [default = 0]; // The pooled output height
+  optional uint32 pooled_w = 2 [default = 0]; // The pooled output width
+}
+
 message ReshapeParameter {
   // Specify the output dimensions. If some of the dimensions are set to 0,
   // the corresponding dimension from the bottom layer is used (unchanged).
@@ -986,7 +995,6 @@ message V1LayerParameter {
     SIGMOID = 19;
     SIGMOID_CROSS_ENTROPY_LOSS = 27;
     SILENCE = 36;
-    SMOOTH_L1_LOSS = 40;
     SOFTMAX = 20;
     SOFTMAX_LOSS = 21;
     SPLIT = 22;
