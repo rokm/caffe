@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------
 // Fast R-CNN
 // Copyright (c) 2015 Microsoft
-// Licensed under The MIT License [see fast-rcnn/LICENSE for details]
+// Licensed under The MIT License [see LICENSE-fast-rcnn for details]
 // Written by Ross Girshick
 // ------------------------------------------------------------------
 
