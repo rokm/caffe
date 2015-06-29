@@ -1,14 +1,18 @@
 classdef Blob < handle
   % Wrapper class of caffe::Blob in matlab
-  
+
   properties (Access = private)
     hBlob_self
   end
-  
+
+  properties (Access = public)
+    dynamic_reshape = false
+  end
+
   methods
     function self = Blob(hBlob_blob)
       CHECK(is_valid_handle(hBlob_blob), 'invalid Blob handle');
-      
+
       % setup self handle
       self.hBlob_self = hBlob_blob;
     end
@@ -34,7 +38,7 @@ classdef Blob < handle
       caffe_('blob_set_diff', self.hBlob_self, diff);
     end
   end
-  
+
   methods (Access = private)
     function shape = check_and_preprocess_shape(~, shape)
       CHECK(isempty(shape) || (isnumeric(shape) && isrow(shape)), ...
@@ -69,10 +73,16 @@ classdef Blob < handle
       is_matched = ...
         (length(self_shape_extended) == length(data_size_extended)) ...
         && all(self_shape_extended == data_size_extended);
-      CHECK(is_matched, ...
-        sprintf('%s, input data/diff size: [ %s] vs target blob shape: [ %s]', ...
-        'input data/diff size does not match target blob shape', ...
-        sprintf('%d ', data_size_extended), sprintf('%d ', self_shape_extended)));
+
+      if ~self.dynamic_reshape,
+        CHECK(is_matched, ...
+          sprintf('%s, input data/diff size: [ %s] vs target blob shape: [ %s]', ...
+          'input data/diff size does not match target blob shape', ...
+          sprintf('%d ', data_size_extended), sprintf('%d ', self_shape_extended)));
+      elseif ~is_matched,
+        % Reshape the blob on-the-fly
+        self.reshape(data_size_extended);
+      end
     end
   end
 end
