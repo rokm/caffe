@@ -67,6 +67,22 @@ elseif(build_using MATCHES "Octave")
 endif()
 
 # ---[ Install
-file(GLOB mfiles caffe/*.m)
-install(FILES ${mfiles} ${Matlab_caffe_mex} DESTINATION matlab)
+install(FILES ${Matlab_caffe_mex} DESTINATION matlab/+caffe/private)
 
+file(GLOB mfiles +caffe/*.m)
+install(FILES ${mfiles} DESTINATION matlab/+caffe)
+
+file(GLOB mfiles +caffe/private/*.m)
+install(FILES ${mfiles} DESTINATION matlab/+caffe/private)
+
+file(GLOB mfiles +caffe/+test/*.m)
+install(FILES ${mfiles} DESTINATION matlab/+caffe/+test)
+
+file(GLOB mfiles +caffe/imagenet/*)
+install(FILES ${mfiles} DESTINATION matlab/+caffe/imagenet)
+
+file(GLOB mfiles demo/*.m)
+install(FILES ${mfiles} DESTINATION matlab/demo)
+
+file(GLOB mfiles hdf5creation/*.m)
+install(FILES ${mfiles} DESTINATION matlab/hdf5creation)
