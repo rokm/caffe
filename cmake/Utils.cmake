@@ -353,6 +353,8 @@ function(caffe_parse_linker_libs Caffe_LINKER_LIBS_variable folders_var flags_va
       string(REGEX MATCH "^lib(.*)" __match ${filename_without_shortest_ext})
       list(APPEND libflags -l${CMAKE_MATCH_1})
       list(APPEND folders    ${folder})
+    elseif(lib MATCHES "PUBLIC" OR lib MATCHES "PRIVATE")
+      # Ignore
     else()
       message(FATAL_ERROR "Logic error. Need to update cmake script")
     endif()
