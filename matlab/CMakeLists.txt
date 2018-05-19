@@ -34,6 +34,8 @@ endfunction()
 file(GLOB Matlab_srcs +caffe/private/caffe_.cpp)
 set(Matlab_caffe_mex ${PROJECT_SOURCE_DIR}/matlab/+caffe/private/caffe_.mex)
 
+include_directories(${Caffe_INCLUDE_DIR} ${Caffe_ALL_INCLUDE_DIRS})
+
 caffe_get_current_cflags(cflags)
 caffe_parse_linker_libs(Caffe_LINKER_LIBS folders libflags macos_frameworks)
 set(folders $<TARGET_LINKER_FILE_DIR:caffe> ${folders})
